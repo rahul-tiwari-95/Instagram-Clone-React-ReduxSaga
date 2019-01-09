@@ -5,6 +5,7 @@ import Input from '../../../src/components/UI/Input/Input'
 import ButtonBG from '../../components/UI/ButtonBG/ButtonBG'
 
 
+
 class AuthScreen extends Component {
 
     loginHandler=()=>{
@@ -33,6 +34,7 @@ class AuthScreen extends Component {
                     <Input placeholder="Confirm Password"/>
                     <Button title="Sign Up" onPress={this.loginHandler}/>
                     <ButtonBG color="#ADD8E6" onPress={()=>alert("Rahul")}>Try me!</ButtonBG>
+                    {/* <Button success><Text> Hello</Text></Button> */}
 
                 </View>
                 {/* </ImageBackground> */}
