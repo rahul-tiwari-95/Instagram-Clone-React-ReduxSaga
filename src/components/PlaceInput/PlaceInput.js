@@ -3,32 +3,19 @@ import {View , Text , StyleSheet , TextInput , Button} from 'react-native';
 import Input from '../UI/Input/Input'
 
 type Props ={};
-class PlaceInput extends Component<Props>{
+const PlaceInput =(props)=>{
 
-    state={
-        placeName:''
-    }
-    placeNameChanged = (event) =>{
-        //alert(event)
-        this.setState({
-            placeName: event,
-        })
-      }
 
-    
-render(){
     return (
 
 
 
              <Input placeholder="Place Name" 
-             value={this.state.placeName} onChangeText={this.placeNameChanged} />
+             value={props.placeName} onChangeText={props.onChangeText} />
 
     )
 
-
-}
-}
+    }
 
 const styles = StyleSheet.create({
 

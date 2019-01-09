@@ -5,7 +5,6 @@ const Input =(props) =>{
 
     return(
     <TextInput 
-    style={styles.input}
      style={[styles.input, props.style]}
     {...props}
     />

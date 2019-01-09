@@ -3,16 +3,29 @@ import {View , Text , TextInput , Button , StyleSheet , ScrollView , Image} from
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
 import {connect} from 'react-redux';
 import {addPlace} from '../../store/actions/index';
-import IndiaImage from '../../assets/India-Gate.jpg';
+import PickImage from '../../components/PickImage/PickImage'
+import PickLocation from '../../components/PickLocation/PickLocation'
 
 
 
 
 class SharePlace extends Component{
 
+
+    state={
+        placeName:''
+    }
+
     constructor(props){
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+    }
+
+    placeNameChangedHandler =(val)=>{
+        this.setState({
+           
+            placeName:val
+        })
     }
 
     onNavigatorEvent=(event)=>{
@@ -27,8 +40,8 @@ class SharePlace extends Component{
         }
     }
 
-    placeAddedFunction = (placeName)=>{
-        this.props.placeAdded(placeName);
+    placeAddedFunction = ()=>{
+        this.props.placeAdded(this.state.placeName);
     }
 
     render(){
@@ -37,23 +50,11 @@ class SharePlace extends Component{
 
             <ScrollView contentContainerStyle={styles.container}>
                 <Text style={{fontWeight:"bold" , fontSize:20}}>Share Place</Text>
-                <View style={styles.placeholder}>
-                    {/* <Text>Image Preview</Text> */}
-                    <Image source={IndiaImage} style={{height:'100%' , width:'100%'}}/>
-                </View>
+                <PickImage />
+                <PickLocation />
+                <PlaceInput placeName={this.state.placeName} onChangeText={this.placeNameChangedHandler}/>
                 <View style={styles.buttonStyle}>
-                <Button title="Pick Image"/>
-                </View>
-                <View style={styles.placeholder}>
-                    <Text> Map View </Text>
-                </View>
-                <View style={styles.buttonStyle}>
-                <Button title="Locate me!" />
-                </View>
-                <PlaceInput />
-                {/* <Input placeholder="Place Name"/> */}
-                <View style={styles.buttonStyle}>
-                <Button title="Submit"/>
+                <Button title="Submit" onPress={this.placeAddedFunction} />
                 </View>
                     {/* <PlaceInput onPlaceAdded={this.placeAddedFunction}/>  */}
             </ScrollView>
