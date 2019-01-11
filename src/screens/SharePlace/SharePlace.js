@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {View , Text , TextInput , Button , StyleSheet , ScrollView , Image} from 'react-native'
+import {View , Text , TextInput , Button , StyleSheet , ScrollView , Image , KeyboardAvoidingView} from 'react-native'
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
 import {connect} from 'react-redux';
 import {addPlace} from '../../store/actions/index';
@@ -13,7 +13,11 @@ class SharePlace extends Component{
 
 
     state={
-        placeName:''
+        placeName:'',
+        location:{
+            value:null,
+            valid:false 
+        }
     }
 
     constructor(props){
@@ -41,7 +45,19 @@ class SharePlace extends Component{
     }
 
     placeAddedFunction = ()=>{
-        this.props.placeAdded(this.state.placeName);
+        this.props.placeAdded(this.state.placeName , this.state.location);
+    }
+
+    locationPickedHandler =(location)=>{
+        this.setState((prevState)=>{
+            return {
+                ...prevState.placeName,
+                location:{
+                    value:location,
+                    valid: true
+                }
+            }
+        })
     }
 
     render(){
@@ -51,13 +67,14 @@ class SharePlace extends Component{
             <ScrollView contentContainerStyle={styles.container}>
                 <Text style={{fontWeight:"bold" , fontSize:20}}>Share Place</Text>
                 <PickImage />
-                <PickLocation />
+                <PickLocation onLocationPick={this.locationPickedHandler} />
                 <PlaceInput placeName={this.state.placeName} onChangeText={this.placeNameChangedHandler}/>
                 <View style={styles.buttonStyle}>
                 <Button title="Submit" onPress={this.placeAddedFunction} />
                 </View>
                     {/* <PlaceInput onPlaceAdded={this.placeAddedFunction}/>  */}
             </ScrollView>
+
         )
     }
 }
@@ -72,7 +89,7 @@ const styles = StyleSheet.create({
     
     },
     container:{
-        flex:1,
+        flex:2,
         alignItems: 'center',
     },
     buttonStyle:{
@@ -82,7 +99,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps=(dispatch) =>{
     return{
-        placeAdded: (placeName)=>{dispatch(addPlace(placeName))}
+        placeAdded: (placeName , location)=>{dispatch(addPlace(placeName , location))}
     }
 }
 

@@ -1,10 +1,20 @@
 import React , {Component} from 'react';
-import {View , Text , StyleSheet} from 'react-native';
+import {View , Text , StyleSheet , TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import PlaceList from '../../components/PlaceList/PlaceList';
 
 class FindPlace extends Component{
 
+    state={
+        placeLoaded: false
+    }
+
+    placeLoadedHandler =()=>{
+        this.setState({
+
+            placeLoaded:true
+        })
+    }
 
     constructor(props){
         super(props);
@@ -39,10 +49,27 @@ class FindPlace extends Component{
 
     render(){
 
+        let content = (
+            <TouchableOpacity onPress={this.placeLoadedHandler}>
+                    <View style={styles.searchButton}>
+                    <Text style={{fontWeight:"bold" , fontSize:10 }}>
+                        Find Place
+                    </Text>
+                    </View>
+            </TouchableOpacity>
+        )
+
+        if(this.state.placeLoaded===true){
+           
+           content=( <PlaceList places={this.props.places}  onItemSelected={this.itemSelectedHandler}  />)
+
+        }
 
         return (
             <View style={styles.ItemContainer}>
-            <PlaceList places={this.props.places}  onItemSelected={this.itemSelectedHandler}  />
+
+                <PlaceList places={this.props.places}  onItemSelected={this.itemSelectedHandler}  />
+
             </View>
         )
     }
@@ -63,6 +90,17 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         
+      },
+      searchButton:{
+          borderWidth: 3,
+          borderRadius: 10,
+          padding:50,
+
+      },
+      buttonContainer:{
+          flex:1,
+          justifyContent: 'center',
+          alignItems:'center'
       }
 })
 

@@ -20,7 +20,8 @@ const reducer = (state=initState , action)=>{
                    name: action.placeName,
                    image: {
                      uri: "https://assets-news-bcdn.dailyhunt.in/cmd/resize/400x400_60/fetchdata13/images/99/15/2f/99152f8531885c0a7a1066cd4752436d.jpg"
-                   }
+                   },
+                   location: action.location,
                   })
 
 

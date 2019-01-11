@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {View , Text , Button , TextInput , StyleSheet , ImageBackground} from 'react-native';
+import {View , Text , Button , TextInput , StyleSheet , ImageBackground , KeyboardAvoidingView} from 'react-native';
 import startMainTabs from '../MainTabs/startMainTabs';
 import Input from '../../../src/components/UI/Input/Input'
 import ButtonBG from '../../components/UI/ButtonBG/ButtonBG'
@@ -8,6 +8,34 @@ import ButtonBG from '../../components/UI/ButtonBG/ButtonBG'
 
 class AuthScreen extends Component {
 
+    state={
+        controls:{
+            email:{
+                value:'',
+                valid: false,
+                validationRules:{
+                    isEmail:true
+                }
+            },
+            password:{
+                value:'',
+                valid: false,
+                validationRules:{
+                    minLength:6
+                }
+
+            },
+            confirmPassword:{
+                value:'',
+                valid: false,
+                validationRules:{
+                    equalTo:'password'
+                }
+
+            }
+        }
+    }
+
     loginHandler=()=>{
         //Code for Authenticating Log-in
         startMainTabs();
@@ -15,7 +43,7 @@ class AuthScreen extends Component {
 
     render(){
         return (
-                <View style={styles.mainContainer}>
+                <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
                 {/* <ImageBackground source={backgroundImage} style={styles.backgroundImage}> */}
                     <Text style={{   textAlign:'center' , fontSize:50  }} >
                         Miranda 
@@ -29,8 +57,12 @@ class AuthScreen extends Component {
                 <View style={styles.container}>
                     
                     <Button title="Switch to Log-in"></Button>
-                    <Input placeholder="Your E-Mail Address" />
-                    <Input placeholder="Password"/>
+                    <Input placeholder="Your E-Mail Address" 
+                    keyboardType='email-address'
+                    />
+                    <Input placeholder="Password"
+                    secureTextEntry
+                    />
                     <Input placeholder="Confirm Password"/>
                     <Button title="Sign Up" onPress={this.loginHandler}/>
                     <ButtonBG color="#ADD8E6" onPress={()=>alert("Rahul")}>Try me!</ButtonBG>
@@ -38,7 +70,7 @@ class AuthScreen extends Component {
 
                 </View>
                 {/* </ImageBackground> */}
-                </View>
+                </KeyboardAvoidingView>
 
         );
     }
